@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import csv
-import pdb
+# import pdb
+import ipdb
 from scipy.stats import median_test
 from sklearn.model_selection import KFold
 from sklearn.linear_model import LinearRegression as LR
@@ -20,7 +21,7 @@ import time
 import statistics
 import scipy
 from scipy import signal
-# import statsmodels.api as sm    # トレンド除去に使う。
+from sklearn.preprocessing import StandardScaler
 
 
 train = pd.read_csv("./train.csv")
@@ -230,7 +231,7 @@ answers = answers.reshape(-1,1)
 model = make_model(factors,answers,n_in)
 pred = model.predict(factors)
 
-# pdb.set_trace()
+# ipdb.set_trace()
 
 
 
@@ -257,7 +258,7 @@ def show_graph(x,pred,expect,affect_length):
   plt.xlabel('days')
   plt.ylabel('sold')
   plt.legend(loc='lower left')  # 図のラベルの位置を指定。
-  # pdb.set_trace()
+  # ipdb.set_trace()
   plt.show()
 
 
@@ -348,7 +349,7 @@ input_data = pd.get_dummies(dat[input_var])
 
 
 # input_data.to_csv("analysis.csv")
-# pdb.set_trace()
+# ipdb.set_trace()
 input_y = input_data["y"].values
 # input_y = scipy.stats.zscore(input_y)
 # # print(input_y.shape) #(207,)
@@ -436,15 +437,27 @@ factors = factors.reshape(-1,affect_length,n_in)
 
 start_y = pred[-affect_length:].reshape(1,affect_length)[0]
 
-pdb.set_trace()
+# ipdb.set_trace()
 
-# test_y = []
+test_y = np.array([])
+ipdb.set_trace()
 
-for i in range(len(start_y)):
-  start_dat = len(dat) - len(test) - affect_length + 1
+for i in range(40):
+  # start_dat = len(dat) - len(test) - affect_length + (i+1)
+  start_dat = len(dat) - len(test) - affect_length + (i)
   predicted = model.predict(factors[start_dat:(start_dat+1)])
-  
-#   factors[]
+  target = factors[start_dat+affect_length][0][0]
+  if target == 0:
+    factors[start_dat+affect_length][0][0] = predicted[0][0]
+    test_y = np.append(test_y,predicted[0][0])
+    print(start_dat)
+  else:
+    print("no")
+
+print("hello.")
+
+ipdb.set_trace()
+
 
   # test["y"][i] = predicted
   # start = np.append
