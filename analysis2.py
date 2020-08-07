@@ -143,17 +143,90 @@ correlation_matrix_event = dat[elems_event].corr().round(2)
 
 
 
-sns.heatmap(data=correlation_matrix_basic, annot=True)
-plt.show()
-sns.heatmap(data=correlation_matrix_week, annot=True)
-plt.show()
-sns.heatmap(data=correlation_matrix_weather, annot=True)
-plt.show()
-sns.heatmap(data=correlation_matrix_remarks, annot=True)
-plt.show()
-sns.heatmap(data=correlation_matrix_event, annot=True)
-plt.show()
+# sns.heatmap(data=correlation_matrix_basic, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_week, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_weather, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_event, annot=True)
+# plt.show()
 
 
-ipdb.set_trace()
+# ipdb.set_trace()
+correlation_matrix_basic_150 = dat[150:][elems_basic].corr().round(2)
+correlation_matrix_week_150 = dat[150:][elems_week].corr().round(2)
+correlation_matrix_weather_150 = dat[150:][elems_weather].corr().round(2)
+correlation_matrix_remarks_150 = dat[150:][elems_remarks].corr().round(2)
+correlation_matrix_event_150 = dat[150:][elems_event].corr().round(2)
 
+
+# sns.heatmap(data=correlation_matrix_basic_150, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_week_150, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_weather_150, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks_150, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_event_150, annot=True)
+# plt.show()
+
+
+non_linear_elems = np.array([])
+
+# ipdb.set_trace()
+
+high_spike = dat[dat["days"].isin([155, 174, 181, 183, 196, 205])]
+high_spike = high_spike[["y","soldout","kcal","payday","precipitation","temperature","days","month","amuse","curry","zeroRain","week_Mon","week_Tues","week_Wed","week_Thur","week_Fri","weather_Fine","weather_Sunny","weather_Cloudy","weather_ThinCloudy","weather_Rainy","weather_Snowy","weather_Thunder","remarks_Amuse","remarks_Nothing","remarks_SpecialMenu","remarks_HomemadeTaste",	"remarks_Chef'sCommitment","remarks_Subuta_Curry","remarks_ChickenLemon_Curry","event_Nothing","event_CareerSupportSeminar","event_Mom'sMeet"]]
+
+high_spike = high_spike[high_spike["days"] > 150]
+# ipdb.set_trace()
+
+high_spike.to_csv("high_spike.csv")
+
+
+
+low_spike = dat[dat["days"].isin([18,27,56,64,113,175,191])]
+low_spike = low_spike[["y","soldout","kcal","payday","precipitation","temperature","days","month","amuse","curry","zeroRain","week_Mon","week_Tues","week_Wed","week_Thur","week_Fri","weather_Fine","weather_Sunny","weather_Cloudy","weather_ThinCloudy","weather_Rainy","weather_Snowy","weather_Thunder","remarks_Amuse","remarks_Nothing","remarks_SpecialMenu","remarks_HomemadeTaste",	"remarks_Chef'sCommitment","remarks_Subuta_Curry","remarks_ChickenLemon_Curry","event_Nothing","event_CareerSupportSeminar","event_Mom'sMeet"]]
+
+
+# correlation_matrix_low_spike1 = low_spike.corr().round(2)
+
+
+correlation_matrix_basic_high = low_spike[elems_basic].corr().round(2)
+correlation_matrix_week_high = low_spike[elems_week].corr().round(2)
+correlation_matrix_weather_high = low_spike[elems_weather].corr().round(2)
+correlation_matrix_remarks_high = low_spike[elems_remarks].corr().round(2)
+correlation_matrix_event_high = low_spike[elems_event].corr().round(2)
+
+# sns.heatmap(data=correlation_matrix_basic_high, annot=True)
+# plt.show()
+
+# ipdb.set_trace()
+# sns.heatmap(data=correlation_matrix_week_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_weather_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks_high, annot=True)
+# plt.show()
+
+
+
+
+low_spike.to_csv("low_spike.csv")
+
+
+# train = pd.read_csv("./train.csv")
+
+
+# ipdb.set_trace()
+
+
+sns.boxplot(x="curry",y="y",data=high_spike)
+
+plt.show()
