@@ -227,6 +227,59 @@ low_spike.to_csv("low_spike.csv")
 # ipdb.set_trace()
 
 
-sns.boxplot(x="curry",y="y",data=high_spike)
+# sns.boxplot(x="curry",y="y",data=high_spike)
 
+# plt.show()
+
+
+
+low_spike_train = pd.read_csv("./low_spike_train.csv")
+
+
+# low_spike_train["week"] = low_spike_train["week"].apply(lambda x : change_day7(x))
+# low_spike_train["weather"] = low_spike_train["weather"].apply(lambda x : change_weather(x))
+# low_spike_train["remarks"] = low_spike_train["remarks"].apply(lambda x : translation_remarks(x))
+# low_spike_train["event"] = low_spike_train["event"].apply(lambda x : translation_event(x))
+
+# low_spike_train = pd.get_dummies(low_spike_train)
+
+# ipdb.set_trace()
+low_spike_train.to_csv("low_spike_train.csv")
+
+low_spike_train = low_spike_train[["y","soldout","kcal","payday","precipitation","temperature","days","month","amuse","curry","zeroRain","week_Mon","week_Tues","week_Wed","week_Thur","week_Fri","weather_Fine","weather_Sunny","weather_Cloudy","weather_ThinCloudy","weather_Rainy","weather_Snowy","remarks_Nothing","remarks_ChickenLemon_Curry","event_Nothing","event_Mom'sMeet","detrend_y"]]
+
+
+elems_basic = ["detrend_y","soldout","kcal","payday","precipitation","temperature","days","month","amuse","curry","zeroRain"]
+elems_week = ["detrend_y","week_Mon","week_Tues","week_Wed","week_Thur","week_Fri"]
+elems_weather = ["detrend_y","weather_Fine","weather_Sunny","weather_Cloudy","weather_ThinCloudy","weather_Rainy","weather_Snowy"]
+elems_remarks = ["detrend_y","remarks_Nothing","remarks_ChickenLemon_Curry"]
+elems_event = ["detrend_y","event_Nothing","event_Mom'sMeet"]
+
+
+
+correlation_matrix_basic_high = low_spike_train[elems_basic].corr().round(2)
+correlation_matrix_week_high = low_spike_train[elems_week].corr().round(2)
+correlation_matrix_weather_high = low_spike_train[elems_weather].corr().round(2)
+correlation_matrix_remarks_high = low_spike_train[elems_remarks].corr().round(2)
+correlation_matrix_event_high = low_spike_train[elems_event].corr().round(2)
+
+# sns.heatmap(data=correlation_matrix_basic_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_week_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_weather_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks_high, annot=True)
+# plt.show()
+# sns.heatmap(data=correlation_matrix_remarks_high, annot=True)
+# plt.show()
+
+
+
+sns.boxplot(x="soldout",y="detrend_y",data=low_spike_train)
 plt.show()
+
+
+sns.boxplot(x="kcal",y="detrend_y",data=low_spike_train)
+plt.show()
+
